@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wp-deployment
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: webapp
+        env: backend
+    spec:
+      volumes:
+      - name: blah
+        persistentVolumeClaim:
+          claimName: wordpress-pvc2
+      containers:
+      - image: wordpress
+        name: wordpress-container
+        ports:
+        - containerPort: 80
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql-ep
+        - name: WORDPRESS_DB_PASSWORD
+          value: mypassword
+        volumeMounts:
+        - name: blah
+          mountPath: /var/www/html
