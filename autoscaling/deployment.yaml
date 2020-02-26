@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: scalingdemo
+spec:
+  replicas: 6
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: demo
+        image: npsoni/scaling
+        ports:
+        - containerPort: 80
